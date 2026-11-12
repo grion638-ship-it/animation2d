@@ -19,7 +19,7 @@ jobs:
         working-directory: ./video-groom
         run: |
           npm install
-          npx remotion render GroomStory public/TUDOR_3D_HUMAN_ULTRA.mp4 --gl=swangle --image-format=png --crf=14 --concurrency=4
+          npx remotion render GroomStory public/TUDOR_3D_HUMAN_ULTRA.mp4 --gl=swangle --jpeg-quality=96 --crf=14 --concurrency=2
       - name: Upload Finished 3D Video
         uses: actions/upload-artifact@v4
         with:

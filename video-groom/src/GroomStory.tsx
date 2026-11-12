@@ -601,7 +601,7 @@ function initWorld(canvas: HTMLCanvasElement): WorldCache {
   });
   renderer.setSize(1080, 1920, false);
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.22;
 
@@ -629,8 +629,8 @@ function initWorld(canvas: HTMLCanvasElement): WorldCache {
   keyLight.angle = Math.PI * 0.38;
   keyLight.penumbra = 0.6;
   keyLight.castShadow = true;
-  keyLight.shadow.mapSize.width = 2048;
-  keyLight.shadow.mapSize.height = 2048;
+  keyLight.shadow.mapSize.width = 1024;
+  keyLight.shadow.mapSize.height = 1024;
   keyLight.shadow.bias = -0.0004;
   scene.add(keyLight);
 
@@ -837,7 +837,7 @@ export const GroomStory: React.FC = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    if (!CACHE) CACHE = initWorld(canvas);
+    if (!CACHE || CACHE.renderer.domElement !== canvas) { if (CACHE) CACHE.renderer.dispose(); CACHE = initWorld(canvas); }
 
     const { renderer, scene, camera, actors, doorPivot, ironBar, chestGroup, stoolGroup, smokeParticles, torchFlames, torchLights } = CACHE;
 
