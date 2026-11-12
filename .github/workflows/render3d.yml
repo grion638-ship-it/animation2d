@@ -1,0 +1,27 @@
+name: Render 3D Ultra Video
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies & Render 3D Video
+        working-directory: ./video-groom
+        run: |
+          npm install
+          npx remotion render GroomStory public/TUDOR_3D_HUMAN_ULTRA.mp4 --gl=swangle --image-format=png --crf=14 --concurrency=4
+      - name: Upload Finished 3D Video
+        uses: actions/upload-artifact@v4
+        with:
+          name: TUDOR_3D_HUMAN_ULTRA_MP4
+          path: ./video-groom/public/TUDOR_3D_HUMAN_ULTRA.mp4
